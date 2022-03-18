@@ -38,10 +38,12 @@ const styles = StyleSheet.create({
   container:{
     height: 100,
     flexDirection: 'row',
-    elevation: 1,
-    borderRadius: 1,
+    elevation: 3,
+    borderRadius: 10,
     marginBottom: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    marginHorizontal: 1
   },
   icon:{
     width: 50,
