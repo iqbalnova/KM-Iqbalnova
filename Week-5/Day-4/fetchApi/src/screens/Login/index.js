@@ -21,39 +21,84 @@ export default function Login({navigation}) {
       if(res.status <= 201){
         navigation.navigate("Main")
       } else {
-        return alert("Error")
+        return alert("Username atau password Salah")
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+
   return (
-    <View style={{ alignContent: 'center', justifyContent:'center', flex: 1}}>
-      <View style={{ marginTop: -150 }}>
-        <Text style={{ margin: 20,textAlign:'center', fontSize:40, fontWeight:'bold' }}>Login</Text>
-        <View style={{margin: 10, alignContent: 'center', justifyContent:'center' }}>
-          
-          <Input placeholder="username" onChangeText={text => setUsername(text)} />
-          <Input
-            placeholder="Password"
-            onChangeText={text => setPassword(text)}
-            secureTextEntry={true}
-          />
+    <View
+      style={{
+        alignContent: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#0000',
+      }}>
+      <ImageBackground
+        source={require('../../img/bioskop.jpg')}
+        style={{flex: 1, resizeMode: 'cover', justifyContent: 'center'}}>
+        <View style={{marginTop: -150}}>
+          <Text
+            style={{
+              margin: 20,
+              textAlign: 'center',
+              fontSize: 50,
+              fontWeight: 'bold',
+              color: '#5D8BF4',
+            }}>
+            Sign In
+          </Text>
+          <View
+            style={{
+              margin: 10,
+              alignContent: 'center',
+              justifyContent: 'center',
+            }}>
+            <Input
+              style={{height: 50, color: 'white'}}
+              placeholder="username"
+              onChangeText={text => setUsername(text)}
+            />
+            <Input
+              style={{height: 50, color: 'white'}}
+              placeholder="Password"
+              onChangeText={text => setPassword(text)}
+              secureTextEntry={true}
+            />
+          </View>
+          <View
+            style={{
+              width: '100%',
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 10,
+              marginBottom: 10,
+            }}>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 11,
+                  marginTop: 5,
+                  marginBottom: 25,
+                }}>
+                Forget Password?
+              </Text>
+            </TouchableOpacity>
 
-          
+            <Button onPress={postLogin} title={'Sign in'} />
+            <TouchableOpacity
+              style={{marginVertical: 10}}
+              onPress={() => navigation.navigate('Register')}>
+              <Text style={{color: 'white'}}>SignUp</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={{ marginHorizontal:20 }}>
-          <Button onPress={postLogin} title={'Sign in'} />
-
-          <TouchableOpacity style={{ marginVertical: 10 }} onPress={() => navigation.navigate('Register')}>
-            <Text>Don't have account yet ?, Register now</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      
-      
-      
+      </ImageBackground>
     </View>
   );
 }

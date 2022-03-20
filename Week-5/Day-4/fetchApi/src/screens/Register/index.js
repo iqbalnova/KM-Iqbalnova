@@ -1,4 +1,4 @@
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import {Input, Button} from 'react-native-elements';
 import axios from 'axios';
@@ -19,46 +19,85 @@ export default function Register({navigation}) {
   const [long, setLong] = useState('');
   const [phone, setPhone] = useState('');
 
+  const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
   const postRegister = async () => {
-    try {
-      const body = {
-        email: email,
-        username: username,
-        password: password,
-        name:{
-            firstname: firstname,
-            lastname: lastname
-        },
-        address:{
-            city: city,
-            street: street,
-            number: number,
-            zipcode: zipcode,
-            geolocation:{
-                lat: lat,
-                long: long
-            }
-        },
-        phone: phone
-      };
-
-      const res = await axios.post(`${BaseUrlApi}/users`, body, {
-        validateStatus: status => status < 501});
-
-      console.log(res);
-      
-      if(res.status <= 201){
-        navigation.navigate("Login")
-      } else {
-        return alert("Error")
-      }
-    } catch (error) {
-      console.log(error);
+    // Cek inputan kosong
+    if(email.length < 1 ){
+      alert('Email tidak boleh kosong');
+    } 
+    else if(username.length < 1){
+      alert('Username tidak boleh kosong');
     }
+    else if(password.length < 1 ){
+      alert('Password tidak boleh kosong');
+    } 
+    else if(firstname.length < 1){
+      alert('Firstname tidak boleh kosong');
+    }
+    else if(lastname.length < 1 ){
+      alert('Lastname tidak boleh kosong');
+    } 
+    else if(city.length < 1 || street.length < 1 || number.length < 1 || zipcode.length < 1 || lat.length < 1 || long.length < 1){
+      alert('Address tidak boleh kosong');
+    }
+    else if(phone.length < 1 ){
+      alert('Number Phone tidak boleh kosong');
+    } 
+    else {
+      // jika tidak ada yang kosong maka lanjut cek regex
+      if(!email.match(regexEmail)){
+        alert('Tidak memenuhi ketentuan Email')
+      }
+      else if (!password.match(regexPassword)){
+        alert('Tidak memenuhi ketentuan password')
+      } 
+      else{
+        try {
+          const body = {
+            email: email,
+            username: username,
+            password: password,
+            name:{
+                firstname: firstname,
+                lastname: lastname
+            },
+            address:{
+                city: city,
+                street: street,
+                number: number,
+                zipcode: zipcode,
+                geolocation:{
+                    lat: lat,
+                    long: long
+                }
+            },
+            phone: phone
+          };
+    
+          const res = await axios.post(`${BaseUrlApi}/users`, body, {
+            validateStatus: status => status < 501});
+    
+          console.log(res);
+          
+          if(res.status <= 201){
+            navigation.navigate("Login")
+          } else {
+            return alert("Error")
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    
+    
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.containner}>
+      <Text style={styles.topic}>Registration</Text>
       <Input placeholder="Email" onChangeText={text => setEmail(text)} />
       <Input placeholder="Username" onChangeText={text => setUsername(text)} />
       <Input
@@ -66,19 +105,60 @@ export default function Register({navigation}) {
         onChangeText={text => setPassword(text)}
         secureTextEntry={true}
       />
-      
-      <Input placeholder="First Name" onChangeText={text => setFirstname(text)} />
+
+      <Input
+        placeholder="First Name"
+        onChangeText={text => setFirstname(text)}
+      />
       <Input placeholder="Last Name" onChangeText={text => setLastname(text)} />
       <Input placeholder="City" onChangeText={text => setCity(text)} />
       <Input placeholder="Street" onChangeText={text => setStreet(text)} />
-      <Input placeholder="Number" onChangeText={text => setNumber(text)} />
-      <Input placeholder="Zip Code" onChangeText={text => setZipcode(text)} />
-      <Input placeholder="Latitude" onChangeText={text => setLat(text)} />
-      <Input placeholder="Longtitude" onChangeText={text => setLong(text)} />
-      <Input placeholder="Number Phone" keyboardType='phone-pad' onChangeText={text => setPhone(text)} />
-
-      <Button onPress={postRegister} title={'Sign up'} />
-
+      <Input placeholder="Number Address" 
+        keyboardType="phone-pad" 
+        onChangeText={text => setNumber(text)} />
+      <Input placeholder="Zip Code" 
+        keyboardType="phone-pad"
+        onChangeText={text => setZipcode(text)} />
+      <Input placeholder="Latitude" 
+        keyboardType="phone-pad" 
+        onChangeText={text => setLat(text)} />
+      <Input placeholder="Longtitude" 
+        keyboardType="phone-pad" 
+        onChangeText={text => setLong(text)} />
+      <Input
+        placeholder="Number Phone"
+        keyboardType="phone-pad"
+        onChangeText={text => setPhone(text)}
+      />
+      <View
+        style={{
+          width: '100%',
+          height: 50,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 20,
+          marginBottom: 50,
+        }}>
+        <Button onPress={postRegister} title={'Sign Up'} />
+      </View>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  containner: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: '#36485f',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  topic: {
+    fontSize: 24,
+    color: '#FFF',
+    paddingTop: 20,
+    marginBottom: 30,
+    borderBottomColor: '#EEF2FF',
+    borderBottomWidth: 1,
+  },
+});
