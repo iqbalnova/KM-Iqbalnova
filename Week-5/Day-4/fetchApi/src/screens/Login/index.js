@@ -17,7 +17,7 @@ export default function Login({navigation}) {
 
       const res = await axios.post(`${BaseUrlApi}/auth/login`, body, {
         validateStatus: status => status < 501});
-      console.log(res.status);
+      console.log(res);
       if(res.status <= 201){
         navigation.navigate("Main")
       } else {
@@ -59,12 +59,14 @@ export default function Login({navigation}) {
             }}>
             <Input
               style={{height: 50, color: 'white'}}
-              placeholder="username"
+              label="Username"
+              placeholder=" "
               onChangeText={text => setUsername(text)}
             />
             <Input
               style={{height: 50, color: 'white'}}
-              placeholder="Password"
+              label="Password"
+              placeholder=" "
               onChangeText={text => setPassword(text)}
               secureTextEntry={true}
             />

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { ACCESS_TOKEN, BaseUrl, ImageUrl } from '../../helpers/API'
 import { useState, useEffect } from 'react'
 
-export default function Home() {
+export default function Home({navigation}) {
 
   const [listMovie, setListMovie] = useState([]);
 
@@ -27,7 +27,7 @@ export default function Home() {
 
   const CardMovie = ({item}) => {
     return (
-      <View
+      <TouchableOpacity onPress={() => navigation.navigate('DetailMovie',{movieId : item.id})}
         style={{
           marginTop: 18,
           flexDirection: 'row',
@@ -67,7 +67,7 @@ export default function Home() {
             {item.overview}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

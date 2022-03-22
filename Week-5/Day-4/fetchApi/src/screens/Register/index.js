@@ -20,7 +20,7 @@ export default function Register({navigation}) {
   const [phone, setPhone] = useState('');
 
   const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
   const postRegister = async () => {
     // Cek inputan kosong
@@ -48,12 +48,13 @@ export default function Register({navigation}) {
     else {
       // jika tidak ada yang kosong maka lanjut cek regex
       if(!email.match(regexEmail)){
-        alert('Tidak memenuhi ketentuan Email')
+        alert('Email tidak valid')
       }
       else if (!password.match(regexPassword)){
-        alert('Tidak memenuhi ketentuan password')
+        alert('Password tidak valid')
       } 
       else{
+        // kalau inputan aman lanjut fetch
         try {
           const body = {
             email: email,
@@ -84,7 +85,7 @@ export default function Register({navigation}) {
           if(res.status <= 201){
             navigation.navigate("Login")
           } else {
-            return alert("Error")
+            return alert("Error: Tidak bisa register")
           }
         } catch (error) {
           console.log(error);
@@ -98,35 +99,81 @@ export default function Register({navigation}) {
   return (
     <ScrollView style={styles.containner}>
       <Text style={styles.topic}>Registration</Text>
-      <Input placeholder="Email" onChangeText={text => setEmail(text)} />
-      <Input placeholder="Username" onChangeText={text => setUsername(text)} />
       <Input
-        placeholder="Password"
+        style={{color: 'white'}}
+        label="Email"
+        placeholder=" "
+        onChangeText={text => setEmail(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Username"
+        placeholder=" "
+        onChangeText={text => setUsername(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Password"
+        placeholder=" "
         onChangeText={text => setPassword(text)}
         secureTextEntry={true}
       />
-
       <Input
-        placeholder="First Name"
+        style={{color: 'white'}}
+        label="First Name"
+        placeholder=" "
         onChangeText={text => setFirstname(text)}
       />
-      <Input placeholder="Last Name" onChangeText={text => setLastname(text)} />
-      <Input placeholder="City" onChangeText={text => setCity(text)} />
-      <Input placeholder="Street" onChangeText={text => setStreet(text)} />
-      <Input placeholder="Number Address" 
-        keyboardType="phone-pad" 
-        onChangeText={text => setNumber(text)} />
-      <Input placeholder="Zip Code" 
-        keyboardType="phone-pad"
-        onChangeText={text => setZipcode(text)} />
-      <Input placeholder="Latitude" 
-        keyboardType="phone-pad" 
-        onChangeText={text => setLat(text)} />
-      <Input placeholder="Longtitude" 
-        keyboardType="phone-pad" 
-        onChangeText={text => setLong(text)} />
       <Input
-        placeholder="Number Phone"
+        style={{color: 'white'}}
+        label="Last Name"
+        placeholder=" "
+        onChangeText={text => setLastname(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="City"
+        placeholder=" "
+        onChangeText={text => setCity(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Street"
+        placeholder=" "
+        onChangeText={text => setStreet(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Number Address"
+        placeholder=" "
+        keyboardType="phone-pad"
+        onChangeText={text => setNumber(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Zip Code"
+        placeholder=" "
+        keyboardType="phone-pad"
+        onChangeText={text => setZipcode(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Latitude"
+        placeholder=" "
+        keyboardType="phone-pad"
+        onChangeText={text => setLat(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Longtitude"
+        placeholder=" "
+        keyboardType="phone-pad"
+        onChangeText={text => setLong(text)}
+      />
+      <Input
+        style={{color: 'white'}}
+        label="Number Phone"
+        placeholder=" "
         keyboardType="phone-pad"
         onChangeText={text => setPhone(text)}
       />
