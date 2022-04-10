@@ -1,6 +1,6 @@
 //nomor 1
 console.log("Nomor 1 ");
-function changeWord (selectedText, changedText, text){
+const changeWord = (selectedText, changedText, text) =>{
     const kalimat = text;
     const ubah = kalimat.replace(selectedText, changedText);
     return ubah;
@@ -11,6 +11,7 @@ const kalimat2 = 'Gunung bromo tak akan mampu menggambarkan besarnya cintaku pad
 
 console.log(changeWord('mencintai','membenci',kalimat1));
 console.log(changeWord('bromo','semeru',kalimat2));
+
 
 
 console.log(" ");
@@ -37,6 +38,8 @@ const checkTypeNumber = (givenNumber) => {
     return hasil;
 }
 
+
+
 console.log(checkTypeNumber(10));
 console.log(checkTypeNumber(3));
 console.log(checkTypeNumber("3"));
@@ -60,6 +63,9 @@ const checkEmail = (email) =>{
    }
    return result;
 }
+
+
+
 console.log(checkEmail('apranata@binar.co.id'));
 console.log(checkEmail('apranata@binar.com'));
 console.log(checkEmail('apranata@binar'));
@@ -88,10 +94,7 @@ const isValidPassword = (email) => {
     */
     
     let result = true + " Karena memenuhi requierement, "+email+" terdiri dari "+email.length+" huruf, ada huruf besar, ada huruf kecil, dan ada angka";
-    if((!email.match(/\d/))&&(!email.match(/[A-Z]/))){
-        result = false + " Karena "+email+" tidak ada angka dan hanya terdiri dari "+email.length+" huruf";
-    }
-    else if(email.length < 8){
+    if(email.length < 8){
         result = false + " Karena "+email+" hanya terdiri dari "+email.length+ " huruf";
     }
     else if (!email.match(/[a-z]/)){
@@ -303,3 +306,14 @@ const getInfoPenjualan = (value) =>{
 console.log(getInfoPenjualan(dataPenjualanNovel))
 console.log(getInfoPenjualan())
 
+
+module.exports = {
+    checkTypeNumber,
+    changeWord, 
+    checkEmail, 
+    isValidPassword,
+    getSplitName,
+    getAngkaTerbesarKedua,
+    getTotalPenjualan,
+    getInfoPenjualan
+};
